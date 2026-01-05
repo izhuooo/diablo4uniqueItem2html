@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>anjin</title>
+  <style>
+    body {
+      font-size: 14px;
+      text-rendering: optimizeLegibility;
+      font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+    }
+
+    #container {
+      width: fit-content;
+    }
+
+    h4 {
+      text-align: center;
+    }
+
+    table {
+      border-collapse: collapse;
+      min-width: 1000px;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid black;
+    }
+
+    th,
+    td {
+      padding: 5px;
+      vertical-align: top;
+    }
+
+    .class-name {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .item-name>div {
+      text-align: center;
+    }
+
+    .item-name>div>div {
+      padding: 2px 0;
+    }
+
+    .mythic-item {
+      color: blueviolet;
+      font-weight: 700;
+    }
+
+    .boss-name {
+      background-color: #ff0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <button id="btn">截图下载</button>
+    <h4>暗金</h4>
+    <table id="table">
+      <thead>
+      </thead>
+      <!-- <tbody>
+        <tr>
+          <td>行1，列1</td>
+        </tr>
+      </tbody> -->
+    </table>
+  </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+  const btn = document.querySelector('#btn');
+  btn.onclick = () => {
+
+    html2canvas(document.getElementById('table'), { useCORS: true })
+      .then(canvas => {
+        const time = new Date().getTime();
+        document.body.appendChild(canvas);
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = `anjin_${time}.png`;
+        link.click();
+        document.body.removeChild(canvas);
+      });
+  }
+
+  const getList = () => {
+    fetch("/data")
+      .then((response) => response.json())
+      .then((res) => {
+        // console.log(data)
+        const dataList = res;
+        const bossList = dataList[0].children.map(i => i.name)
+
+        // 生成头部菜单
+        const table = document.querySelector("table")
+        let thead = table.createTHead();
+        let theadRow = thead.insertRow();
+
+        theadRow.appendChild(document.createElement("th"))
+        bossList.forEach(text => {
+          let th = document.createElement("th");
+          th.className = 'boss-name';
+          th.innerHTML = text;
+          theadRow.appendChild(th);
+        });
+
+        // 生成子菜单项
+        const tbody = table.createTBody();
+        dataList.forEach(i => {
+          console.log(i);
+          const tbodyRow = tbody.insertRow();
+          // const cell = tbodyRow.insertCell();
+          // cell.textContent = i.name;
+          let td = document.createElement("td");
+          td.className = 'class-name';
+          td.innerHTML = i.name;
+          tbodyRow.appendChild(td);
+          i.children.forEach(o => {
+            let td2 = document.createElement("td");
+            td2.className = 'item-name';
+            let children = document.createElement("div")
+            o.children.forEach(v => {
+              let div = document.createElement("div");
+              div.innerHTML = v.name;
+              div.className = v.isMythic ? 'mythic-item' : ''
+              children.appendChild(div);
+            })
+            td2.appendChild(children);
+            tbodyRow.appendChild(td2);
+          })
+        })
+      })
+      .catch((error) => console.error("Error:", error));
+  }
+
+  getList();
+</script>
+
+</html>
