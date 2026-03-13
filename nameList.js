@@ -20,6 +20,7 @@ const bossList = [
   { value: 'Andariel', label: '安达莉尔' },
   { value: 'The Infernal Hordes', label: '炼狱魔潮' },
   { value: 'Harbinger of Hatred', label: '憎恨先驱' },
+  { value: 'Butcher', label: '屠夫圣坛' },
 ]
 
 module.exports = {
