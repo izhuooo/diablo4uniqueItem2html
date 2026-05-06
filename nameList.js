@@ -7,6 +7,7 @@ const charList = [
   { value: 'Rogue', label: '游侠' },
   { value: 'Spiritborn', label: '灵巫' },
   { value: 'Paladin', label: '圣骑士' },
+  { value: 'Warlock', label: '术士' },
   { value: 'Generic', label: '全职业' },
 ]
 

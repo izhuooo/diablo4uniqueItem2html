@@ -18,4 +18,5 @@ app.get("/data", (req, res) => {
 
 app.listen(port, () => {
   console.log(`应用正在监听${port}端口 !`);
+  console.log(`http://localhost:${port}`);
 });
