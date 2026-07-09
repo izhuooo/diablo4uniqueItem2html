@@ -1,7 +1,6 @@
 const charList = [
   { value: 'Druid', label: '德鲁伊' },
   { value: 'Barbarian', label: '野蛮人' },
-  { value: 'Spiritborn', label: '灵巫' },
   { value: 'Necromancer', label: '死灵法师' },
   { value: 'Sorcerer', label: '巫师' },
   { value: 'Rogue', label: '游侠' },
@@ -22,6 +21,7 @@ const bossList = [
   { value: 'The Infernal Hordes', label: '炼狱魔潮' },
   { value: 'Harbinger of Hatred', label: '憎恨先驱' },
   { value: 'Butcher', label: '屠夫圣坛' },
+  { value: 'Astaroth', label: '阿斯塔洛斯' },
 ]
 
 module.exports = {
